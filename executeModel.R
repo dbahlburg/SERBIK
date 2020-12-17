@@ -43,27 +43,10 @@ defineConstants()
 modelResults <- krillGrowth() %>% 
   mutate(length = volumetricLength / shapeCorrection) %>% 
   mutate(referenceDate = as.Date(referenceDate, origin = '1970-01-01'))
-
-# ============================================================================= #
-# create data set containing date ranges for highlighting certain ranges 
-# during the year (winter period and highly productive periods)
-# -----------------------------------------------------------------------------
-dateRanges <- data.frame(
-  startDate = c(seq(as.Date("2010-04-01"), as.Date("2010-04-01") + years * 365, "1 year"),
-                seq(as.Date("2010-12-01"), as.Date("2010-12-01") + years * 365, "1 year")),
-  endDate = c(seq(as.Date("2010-09-30"), as.Date("2010-09-30") + years* 365, "1 year"),
-              seq(as.Date("2011-01-31"), as.Date("2011-01-31") + years* 365, "1 year")),
-  group = c(rep('winter', times = length(seq(as.Date("2010-04-01"), as.Date("2010-04-01") + years * 365, "1 year"))),
-            rep('summer', times = length(seq(as.Date("2010-09-30"), as.Date("2010-09-30") + years* 365, "1 year"))))
-) %>% mutate(refStartDay = as.numeric(difftime(startDate, first(modelResults$referenceDate))),
-             refEndDay = as.numeric(difftime(endDate, first(modelResults$referenceDate))),
-             startDay = refStartDay /365,
-             endDay = refEndDay/365)
 # -----------------------------------------------------------------------------
 # plot the results
 modelResults %>%
-  mutate(eggBuffer = ifelse(eggBuffer < 0,0,eggBuffer),
-         age = age/365) %>%
+  mutate(age = age/365) %>%
   gather(variable, value, -referenceDate, -age) %>%
   ggplot(.,aes(x = age, y = value)) +
   scale_fill_manual(values = c('#e8a554','#878787')) +
