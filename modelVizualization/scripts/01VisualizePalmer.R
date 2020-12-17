@@ -5,8 +5,8 @@
 library(lubridate)
 library(tidyverse)
 library(cowplot)
-setwd('/Users/dominik/Git/PhDThesis/growthModel')
-source('functions/generatePalmer.R')
+library(here)
+source(here('functions','generatePalmer.R'))
 # =============================================================================#
 # First: create food plot
 startDay <- 1
@@ -45,7 +45,6 @@ food <- ggplot(data2, aes(x=month, y=meanFood, fill = scenario, colour = scenari
         legend.background = element_rect(fill = NA),
         plot.margin=grid::unit(c(1,1,1,1), "mm"),
         legend.position = c(0.7,0.9))
-ggsave('explanatoryMaterial/plots/palmerFood.png', food, width = 6, height = 4.5)
 # =============================================================================#
 # Second: create temperature curve
 data <- generatePalmer()
@@ -64,7 +63,6 @@ temp <- ggplot(data, aes(x = date, y = temperature)) +
         legend.background = element_rect(fill = NA),
         plot.margin=grid::unit(c(1,1,1,1), "mm"),
         legend.position = c(0.9,0.9))
-ggsave('explanatoryMaterial/plots/PalmerTemperature.png', temp, width = 6, height = 4.5)
 # =============================================================================#
 # Third: create light curve
 light <- ggplot(data, aes(x = date, y = dayLength)) +
@@ -82,10 +80,7 @@ light <- ggplot(data, aes(x = date, y = dayLength)) +
         legend.background = element_rect(fill = NA),
         plot.margin=grid::unit(c(1,1,1,1), "mm"),
         legend.position = c(0.9,0.9))
-ggsave('explanatoryMaterial/plots/PalmerDaylight.png', light, width = 6, height = 4.5)
 
 palmerPlots <- plot_grid(food, temp, light,
                          nrow = 1, scale = 0.85)
-#palmerPlots
-ggsave('/Users/dominik/Documents/KRILL_UFZ/Publications/01GrowthModel/plots/Figure2.png', palmerPlots, width = 13, height = 5/17 * 13)
 

@@ -50,9 +50,9 @@ modelResults <- krillGrowth() %>%
 # -----------------------------------------------------------------------------
 dateRanges <- data.frame(
   startDate = c(seq(as.Date("2010-04-01"), as.Date("2010-04-01") + years * 365, "1 year"),
-            seq(as.Date("2010-12-01"), as.Date("2010-12-01") + years * 365, "1 year")),
+                seq(as.Date("2010-12-01"), as.Date("2010-12-01") + years * 365, "1 year")),
   endDate = c(seq(as.Date("2010-09-30"), as.Date("2010-09-30") + years* 365, "1 year"),
-          seq(as.Date("2011-01-31"), as.Date("2011-01-31") + years* 365, "1 year")),
+              seq(as.Date("2011-01-31"), as.Date("2011-01-31") + years* 365, "1 year")),
   group = c(rep('winter', times = length(seq(as.Date("2010-04-01"), as.Date("2010-04-01") + years * 365, "1 year"))),
             rep('summer', times = length(seq(as.Date("2010-09-30"), as.Date("2010-09-30") + years* 365, "1 year"))))
 ) %>% mutate(refStartDay = as.numeric(difftime(startDate, first(modelResults$referenceDate))),
@@ -66,14 +66,9 @@ modelResults %>%
          age = age/365) %>%
   gather(variable, value, -referenceDate, -age) %>%
   ggplot(.,aes(x = age, y = value)) +
-    # geom_rect(data = dateRanges, aes(xmin = startDay , xmax = endDay,
-    #                                 ymin = 0, ymax = Inf,
-    #                                 fill = group),
-    #          inherit.aes=FALSE, alpha = 0.25) +
-  #scale_x_date(limits = c(), date_breaks = '12 months', date_labels = '%Y') +
   scale_fill_manual(values = c('#e8a554','#878787')) +
-    geom_line(colour = '#3b3b3b', size = 0.7)+
-    facet_wrap(~variable, scales = 'free') +
+  geom_line(colour = '#3b3b3b', size = 0.7)+
+  facet_wrap(~variable, scales = 'free') +
   labs(x = 'years')+
   theme(strip.background = element_blank(),
         panel.background = element_rect(fill = NA, colour = '#525252'))

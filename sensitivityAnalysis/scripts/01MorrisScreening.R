@@ -25,7 +25,7 @@ setwd(here())
 #Load results (executing function below), tic()/toc() for benchmarking
 #The results were calculated for four different model response values and 
 #40 screening runs for each response...
-morrisScreening <- readRDS("sensitivity/outputData/morrisScreening40Reps.RData")
+morrisScreening <- readRDS(here('sensitivityAnalysis','outputData','morrisScreening40Reps.RData'))
 
 #Run the morris screening for all model responses and winter boost scenarios...
 morrisInput <- expand.grid(output = c('noEggs','maxSize','dayOfMaturity'),
@@ -202,10 +202,6 @@ morrisResults <- plot_grid(eggPlotSigmaMu, eggPlotMuMu,
           maxSizePlotSigmaMu,maxSizePlotMuMu, 
           dayOfMaturityPlotSigmaMu,dayOfMaturityPlotMuMu, 
           ncol = 2,align = "v")
-
-ggsave('/Users/dominik/Documents/KRILL_UFZ/Publications/01GrowthModel/Plots/SuppFigure1.png', morrisResults, width = 11, height = 14)
- 
-
 #======================================================================================#
 #Plot results where winterBoost == F
 eggPlotSigmaMu <- morrisResultsPlot %>% 
@@ -277,8 +273,6 @@ morrisResults <- plot_grid(eggPlotSigmaMu, eggPlotMuMu,
                            #spawningPlotSigmaMu, spawningPlotMuMu, 
                            maxSizePlotSigmaMu,maxSizePlotMuMu,
                            ncol = 2,align = "v")
-
-ggsave('/Users/dominik/Documents/KRILL_UFZ/Publications/01GrowthModel/Plots/SuppFigure2.png', morrisResults, width = 11, height = 2/3 * 14)
 #--------------------------------------------------------------------------------------#
 #--------------------------------------------------------------------------------------#
 # Summary tables summarizing influential parameters for both winter food scenarios facilitating comparisons

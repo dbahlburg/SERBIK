@@ -9,11 +9,11 @@
 library(tidyverse)
 library(lubridate)
 library(openxlsx)
+library(here)
 ##============================================================================================##
 #Set up the model
-setwd('/Users/dominik/Git/PhDThesis/growthModel')
-source('functions/growthModel.R')
-source('functions/defineConstants.R')
+source(here('functions','growthModel.R'))
+source(here('functions','defineConstants.R'))
 # =============================================================================
 # Model settings. Choose environmental scenario, light and temperature regulation
 # and reproduction options Euphausia--1

@@ -6,14 +6,14 @@ library(tidyverse)
 library(cowplot)
 library(ggimage)
 library(suncalc)
-#setwd("~/GitHub/GrowthModel")
-setwd("~/Git/PhDThesis/growthModel")
-source('functions/lightCorrection.R')
-source('functions/temperatureCorrection.R')
-source('functions/generatePalmer.R')
-source('functions/defineConstants.R')
-source('functions/feedingResponse.R')
-source('functions/growthModel.R')
+library(here)
+
+source(here('functions','lightCorrection.R'))
+source(here('functions','temperatureCorrection.R'))
+source(here('functions','generatePalmer.R'))
+source(here('functions','defineConstants.R'))
+source(here('functions','feedingResponse.R'))
+source(here('functions','growthModel.R'))
 
 legendLine <- tibble(date = seq(from = as.POSIXct('2010-06-20 00:00:00'),
                                 to = as.POSIXct('2010-07-15 00:00:00'),
@@ -45,21 +45,6 @@ foodReg <- palmer %>%
                                       stage = 3),
          regulation = 'on') 
   
-# foodUptake <- palmer %>% 
-#   rowwise() %>% 
-#   mutate(foodUptake =  maxAssimilation * indSize^2 * foodConversion * 
-#            feedingFunction(chosenFunction = 'HollingType2',
-#                                       feedingMode = 0, foodConc = foodConc, 
-#                                       stage = 3),
-#          regulation = 'off') %>% 
-#   bind_rows(., foodReg) %>% 
-#   mutate(energyDemand = ifelse(regulation == 'on', 
-#                                Jsm * indSize^3 * totalRegulation,
-#                                Jsm * indSize^3 ),
-#          deficit = foodUptake - energyDemand,
-#          phase = ifelse(deficit > 0 & month(date) < 6, 'noDeficit1',
-#                         ifelse(deficit > 0 & month(date) > 6, 'noDeficit2',
-#                                'deficit')))
 #================================================================================#
 #Run the model without winter boost
 inputScenario <- 'palmer'
@@ -188,7 +173,4 @@ regulationPlot <- foodReg %>%
         plot.margin=grid::unit(c(1,1,1,1), "mm"))
 
 figure3<-plot_grid(regulationPlot, effectPlot, rel_widths = c(1/3,2/3))
-ggsave('/Users/dominik/Documents/KRILL_UFZ/Publications/01GrowthModel/Plots/figure3.png', 
-       figure3, 
-       width = 13.5, height = 5/17 * 12)
- 
+
