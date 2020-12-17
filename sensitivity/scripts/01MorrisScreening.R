@@ -8,8 +8,9 @@ library(sensitivity)
 library(tictoc)
 library(ggrepel)
 library(cowplot)
+library(here)
 
-setwd("~/Git/PhDThesis/growthModel")
+setwd(here())
 # source('functions/defineConstantsAndRun.R')
 #------------------------------------------------------------------------------#
 #Prepare initial matrix containing starting values for screening
